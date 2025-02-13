@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "63563171674",
-    "project_id": "chatapp-f513c",
-    "storage_bucket": "chatapp-f513c.firebasestorage.app"
+    "project_number": "1063311470471",
+    "project_id": "chattingapp-c759a",
+    "storage_bucket": "chattingapp-c759a.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:63563171674:android:c373b8efc4e8b3dc1ad563",
+        "mobilesdk_app_id": "1:1063311470471:android:7c3572fe47559506132d22",
         "android_client_info": {
           "package_name": "com.example.sample"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAMMvMkt8SbJAzKr8WuWMyRbSjY5nPLSl0"
+          "current_key": "AIzaSyDaYA0MBataUsAlGB_n6Q3NSsPrktIXNUk"
         }
       ],
       "services": {
