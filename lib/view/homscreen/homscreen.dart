@@ -71,40 +71,61 @@ class _HomscreenState extends State<Homscreen> {
         ),
       
         body:Column(
-          children: [
-            Expanded(child: StreamBuilder<QuerySnapshot>(
-              stream:chatprovider.getChats(loggedInUser!.uid) ,
-               builder: (context, snapshot) {
-                if(!snapshot.hasData){
-                  return Center(child: CircularProgressIndicator(),);
-                }
-                final chatDocs=snapshot.data!.docs;
-                return FutureBuilder<List<Map<String, dynamic>>>(
-                          future: Future.wait(chatDocs.map((chatDoc) => fetchchatdata(chatDoc.id))),
+  children: [
+    Expanded(
+      child: StreamBuilder<QuerySnapshot>(
+        stream: chatprovider.getChats(loggedInUser!.uid),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-                  builder: (context, snapshot) {
-                         if(!snapshot.hasData){
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                         }
-                         final chatDataList=snapshot.data!;
-                         return ListView.builder(
-                          itemCount: chatDataList.length,
-                          itemBuilder: 
-                         (context, index) {
-                          final chatData=chatDataList[index];
-                           return ChatTile(
-                            chatId: chatData["chatId"], 
-                            lastMessage:chatData["lastMessage"], 
-                            timestamp: chatData["timestamp"], 
-                            receiverData:chatData["userData"]);
-                         },);
-                  }
-                );
-               },))
-          ],
-        ),
+          final chatDocs = snapshot.data!.docs;
+
+          // Show a message if no chats exist
+          if (chatDocs.isEmpty) {
+            return Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "No chats available ,click ",
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  Icon(Icons.search, color: Colors.grey,)
+                ],
+              ),
+            );
+          }
+
+          return FutureBuilder<List<Map<String, dynamic>>>(
+            future: Future.wait(chatDocs.map((chatDoc) => fetchchatdata(chatDoc.id))),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              final chatDataList = snapshot.data!;
+
+              return ListView.builder(
+                itemCount: chatDataList.length,
+                itemBuilder: (context, index) {
+                  final chatData = chatDataList[index];
+                  return ChatTile(
+                    chatId: chatData["chatId"],
+                    lastMessage: chatData["lastMessage"],
+                    timestamp: chatData["timestamp"],
+                    receiverData: chatData["userData"],
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
+    ),
+  ],
+),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
